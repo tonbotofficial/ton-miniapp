@@ -107,7 +107,7 @@
 
   <div id="page1" class="page">
     <img src="https://tonbotofficial.github.io/ton-miniapp/screen1.gif" alt="صفحه اول">
-    <div id="counter">300,000</div>
+    <div id="counter">772000</div>
     <button class="button" onclick="goToPage2()">Claim Your Reward Now</button>
   </div>
 
@@ -120,14 +120,14 @@
   </div>
 
   <script>
-    const INITIAL = 300000, MIN = 0;
+    const INITIAL = 772000, MIN = 0;
     const KEY_COUNT = 'tonCounter', KEY_TIME = 'tonTime';
     let count = parseInt(localStorage.getItem(KEY_COUNT)) || INITIAL;
     let last = parseInt(localStorage.getItem(KEY_TIME)) || Date.now();
 
     function tick() {
       const now = Date.now();
-      let delta = Math.floor((now - last) / 700);
+      let delta = Math.floor((now - last) / 1500);
       while (delta-- > 0 && count > MIN) {
         let dec = Math.floor(Math.random() * 41) + 10;
         count = Math.max(MIN, count - dec);
