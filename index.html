@@ -127,7 +127,7 @@
 
     function tick() {
       const now = Date.now();
-      let delta = Math.floor((now - last) / 1500);
+      let delta = Math.floor((now - last) / 1800);
       while (delta-- > 0 && count > MIN) {
         let dec = Math.floor(Math.random() * 41) + 10;
         count = Math.max(MIN, count - dec);
@@ -150,7 +150,7 @@
     }
 
     tick();
-    setInterval(tick, 1500);
+    setInterval(tick, 1800);
   </script>
 </body>
 </html>
